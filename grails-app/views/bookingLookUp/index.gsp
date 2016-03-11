@@ -55,10 +55,24 @@
             <div class="col-md-6">
                 <form class="form-horizontal" role="form" title="Lookup form">
                     <div class="form-group">
-                        <label for="hotelLookup" class="col-sm-2 control-label">City</label>
-                        <div class="col-sm-10">
-                            <input id="hotelLookup" type="search" class="form-control" placeholder="search for a place..." value="${booking.city}" onchange="doSearch()" />
+                        <label for="hotelLookup" class="col-sm-3 control-label">Location</label>
+                        <div class="col-sm-9">
+                            <input id="hotelLookup" type="text" class="form-control" placeholder="search for a place..." value="${booking.query}" onchange="doSearch()" />
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lookupRadius" class="col-sm-3 control-label">Radius</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                %{--<input type="text" class="form-control">--}%
+                                <input id="lookupRadius" type="text" class="form-control" placeholder="search for a place..." value="${booking.radius}"/>
+                                <span class="input-group-addon">km</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Filter criteria</label>
                     </div>
                 </form>
             </div>
@@ -82,7 +96,19 @@
             debugger;
             var searchStr = $("#hotelLookup").val();
             if (searchStr != null && searchStr != "") {
-                initMap(searchStr);
+//                initMap(searchStr);
+
+                var currLocation = map.getCenter();
+
+                var request = {
+                    location: currLocation,
+                    radius: '500',
+                    units : 'km',
+                    query: searchStr
+                };
+
+                service = new google.maps.places.PlacesService(map);
+                service.textSearch(request, callback);
             }
         }
     </script>

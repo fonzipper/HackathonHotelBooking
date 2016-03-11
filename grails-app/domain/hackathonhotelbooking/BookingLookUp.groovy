@@ -8,7 +8,9 @@ class BookingLookUp {
     private double xLocation;
     private double yLocation;
 
-    private String city;
+    private double radius;
+
+    private String query;
 
     public BookingLookUp() {
 
@@ -56,11 +58,19 @@ class BookingLookUp {
         this.yLocation = yLocation
     }
 
-    String getCity() {
-        return city
+    double getRadius() {
+        return radius
     }
 
-    void setCity(String city) {
-        this.city = city
+    void setRadius(double radius) {
+        this.radius = radius
+    }
+
+    String getQuery() {
+        return query
+    }
+
+    void setQuery(String query) {
+        this.query = query
     }
 }
