@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservices.pegs.com" xmlns:ota="http://www.opentravel.org/OTA/2003/05" xmlns:eb="http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" targetNamespace="http://webservices.pegs.com">
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd" schemaLocation="msg-header-2_0.xsd"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="OTA_HotelDescriptiveInfoRQ.xsd"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="OTA_HotelDescriptiveInfoRS.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="OTA_HotelDesctiptiveInfoInput">
+		<wsdl:part name="ebXML" element="eb:MessageHeader"/>
+		<wsdl:part name="wsse" element="wsse:Security"/>
+		<wsdl:part name="otarq" element="ota:OTA_HotelDescriptiveInfoRQ"/>
+	</wsdl:message>
+	<wsdl:message name="OTA_HotelDesctiptiveInfoOutput">
+		<wsdl:part name="otars" element="ota:OTA_HotelDescriptiveInfoRS"/>
+	</wsdl:message>
+	<wsdl:portType name="OTAHotelDescriptiveInfoPortType">
+		<wsdl:operation name="OTAHotelDescriptiveInfo">
+			<wsdl:input message="tns:OTA_HotelDesctiptiveInfoInput"/>
+			<wsdl:output message="tns:OTA_HotelDesctiptiveInfoOutput"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OTAHotelDescriptiveInfoBinding" type="tns:OTAHotelDescriptiveInfoPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="OTAHotelDescriptiveInfo">
+			<soap:operation soapAction="OTA"/>
+			<wsdl:input>
+				<soap:header message="tns:OTA_HotelDesctiptiveInfoInput" part="ebXML" use="literal"/>
+				<soap:header message="tns:OTA_HotelDesctiptiveInfoInput" part="wsse" use="literal"/>
+				<soap:body parts="otarq" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="otars" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OTA_HotelDescriptiveInfoService">
+		<wsdl:port name="OTAHotelDescriptiveInfoPortType" binding="tns:OTAHotelDescriptiveInfoBinding">
+			<soap:address location="https://webservices-uatprod.dhisco.com/OTAHotelDescriptiveContentNotif/web_servicesOTAHotelDescriptiveInfo/web_services"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
