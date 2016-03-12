@@ -4,7 +4,7 @@ import groovy.json.JsonSlurper
  * Created by Punker on 12.03.2016.
  */
 class RequestParser {
-    public static String[] prepareRequest(BookingLookUp[] searchSettings) {
+    public static String[] prepareRequest(List<BookingLookUp> searchSettings) {
         String[][] req;
         for (int month = 0; month < searchSettings.length; month++) {
 
@@ -105,8 +105,9 @@ class RequestParser {
         return req;
     }
 
-    SearchResults [][] searchResults;
+
     public static void parseResponse(String[][] res) {
+        SearchResults [][] searchResults;
         for (int month = 0; month < res.length; month++) {
             for (int group = 0; group < res[month].length; group++) {
                 List<Room> rooms = new ArrayList<>();
@@ -146,6 +147,10 @@ class RequestParser {
                         }
                     }
                 }
+                SearchResults sr = new SearchResults()
+                sr.hotels = hotels;
+                sr.rooms = rooms;
+                searchResults[month][group] = sr;
             }
         }
     }
