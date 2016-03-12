@@ -38,7 +38,6 @@ class BookingLookUp {
 
         this.groupSettings.add(bgs);
 
-//        System.out.println(this.groupSettings.size());
         return this.groupSettings;
     }
 
