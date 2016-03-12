@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="container">
-<br/>
+        <br/>
         <div class="row">
             <div class="col-md-4">
                 <form class="form-horizontal" role="form" title="Location lookup form" action="#">
@@ -158,6 +158,20 @@
                 <button class="btn btn-default" onclick="roomsSearch(); return false;">Search</button>
             </div>
         </div>
+        <g:if test="${rooms}">
+            <div class="row">
+                <div class="col-ms-12">
+                    <table class="table-striped">
+                        <thead>
+                            <tr>
+                                <th>Hotel</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </g:if>
     </div><!-- /.container -->
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbBdqhK286kQ6l1W5C28tqF2n8LcNqAAI&libraries=places&callback=initMap">
