@@ -10,6 +10,7 @@ class BookingLookUpController {
         blu.commonSuitNumber = 15;
         blu.familySuitNumber = 5;
         blu.radius = 5;
+        blu.membersCount = 60;
 
         render view: '/bookingLookUp/index',model: [booking : blu];
     }

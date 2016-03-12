@@ -4,13 +4,20 @@ class BookingLookUp {
     private Integer commonSuitNumber;
     private Integer familySuitNumber;
     private Integer vipSuitNumber;
+    private Integer membersCount;
+    private String accommodationQuantity;
+
+    private Date fulltimeCheckIn;
+    private Date fulltimeCheckOut;
+
 
     private double xLocation;
     private double yLocation;
 
     private double radius;
 
-    private String query;
+    private String city;
+    private String location;
 
     public BookingLookUp() {
 
@@ -66,11 +73,51 @@ class BookingLookUp {
         this.radius = radius
     }
 
-    String getQuery() {
-        return query
+    String getCity() {
+        return city
     }
 
-    void setQuery(String query) {
-        this.query = query
+    void setCity(String query) {
+        this.city = query
     }
+
+    Integer getMembersCount() {
+        return membersCount
+    }
+
+    void setMembersCount(Integer membersCount) {
+        this.membersCount = membersCount
+    }
+
+    String getLocation() {
+        return location
+    }
+
+    void setLocation(String location) {
+        this.location = location
+    }
+
+    String getAccommodationQuantity() {
+        return accommodationQuantity
+    }
+
+    void setAccommodationQuantity(String accommodationQuantity) {
+        this.accommodationQuantity = accommodationQuantity
+    }
+
+    Date getFulltimeCheckOut() {
+        return fulltimeCheckOut
+    }
+
+    void setFulltimeCheckOut(Date checkOut) {
+        this.fulltimeCheckOut = checkOut
+    }
+
+    Date getFulltimeCheckIn() {
+        return fulltimeCheckIn
+    }
+
+    void setFulltimeCheckIn(Date checkIn) {
+        this.fulltimeCheckIn = checkIn
+    };
 }

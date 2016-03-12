@@ -1,3 +1,6 @@
+var map;
+var markers = [];
+
 function initMap() {
     debugger;
     var currLocation; //= new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -32,14 +35,9 @@ function addMarker(place) {
         map: map,
         position: place.geometry.location,
         place : place
-        //icon: {
-        //    url: 'http://maps.gstatic.com/mapfiles/circle.png',
-        //    anchor: new google.maps.Point(10, 10),
-        //    scaledSize: new google.maps.Size(10, 17)
-        //}
     });
 
-    //var initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+    markers.push(marker);
 
     google.maps.event.addListener(marker, 'click', function() {
         service.getDetails(place, function(result, status) {
@@ -52,4 +50,11 @@ function addMarker(place) {
         });
     });
     map.setCenter(place.geometry.location);
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
 }
