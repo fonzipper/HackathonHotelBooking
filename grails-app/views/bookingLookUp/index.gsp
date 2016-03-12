@@ -51,11 +51,11 @@
     </div>
     <div class="container">
 <br/>
-        %{--<div class="row">--}%
-            %{--<div class="col-lg-12">--}%
-                %{--<h2>Hotel booking lookup</h2>--}%
-            %{--</div>--}%
-        %{--</div>--}%
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="map"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <form class="form-horizontal" role="form" title="Location lookup form" action="#">
@@ -148,7 +148,6 @@
                 <button class="button button-default" onclick="roomsSearch(); return false;">Search</button>
             </div>
             <div class="col-md-6">
-                <div id="map"></div>
             </div>
         </div>
 
@@ -212,8 +211,8 @@
 //            $('#locationLng').text()
 
             params = {
-                lattitude : 52.5186202,
-                longitude : 13.3739984,
+                longitude : 37.61725271047851,
+                lattitude : 55.733193481733345,
                 checkin : $('#ftCheckIn').val(),
                 checkout : $('#ftCheckOut').val(),
                 radius : $('#lookupRadius').val(),
@@ -312,8 +311,8 @@
             });
             map.setCenter(place.geometry.location);
             map.setZoom(15);
-            $('#locationLng').text = place.geometry.location.lng();
-            $('#locationLat').text = place.geometry.location.lat();
+            $('#locationLng').text(place.geometry.location.lng());
+            $('#locationLat').text(place.geometry.location.lat());
         }
 
         // Sets the map on all markers in the array.
