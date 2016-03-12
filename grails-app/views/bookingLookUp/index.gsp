@@ -51,14 +51,16 @@
     </div>
     <div class="container">
 <br/>
-        %{--<div class="row">--}%
-            %{--<div class="col-lg-12">--}%
-                %{--<h2>Hotel booking lookup</h2>--}%
-            %{--</div>--}%
-        %{--</div>--}%
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="map"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <form class="form-horizontal" role="form" title="Location lookup form" action="#">
+                    <div id="locationLat" class="hidden"></div>
+                    <div id="locationLng" class="hidden"></div>
                     <legend>Location</legend>
                     <div class="form-group">
                         <label for="cityLookup" class="col-sm-5 control-label">City/Country</label>
@@ -143,9 +145,9 @@
                         </div>
                     </div>
                 </form>
+                <button class="button button-default" onclick="roomsSearch(); return false;">Search</button>
             </div>
             <div class="col-md-6">
-                <div id="map"></div>
             </div>
         </div>
 
@@ -200,6 +202,124 @@
         function addGroup(){
             if (visibleGroups < 5) visibleGroups++;
             $("#groupsettings"+visibleGroups).removeClass("hidden");
+        }
+
+        function roomsSearch(){
+            debugger;
+
+//            $('#locationLat').text()
+//            $('#locationLng').text()
+
+            params = {
+                longitude : 37.61725271047851,
+                lattitude : 55.733193481733345,
+                checkin : $('#ftCheckIn').val(),
+                checkout : $('#ftCheckOut').val(),
+                radius : $('#lookupRadius').val(),
+                groups : {
+                    group1 : {
+                        size : $('#groupSize1').val(),
+                        type : $('#accommodationType1').val(),
+                        accSize : $('#accommodationSize1').val(),
+                        stars : $('#stars1').val()
+                    },
+                    group2 : {
+                        size : $('#groupSize2').val(),
+                        type : $('#accommodationType2').val(),
+                        accSize : $('#accommodationSize2').val(),
+                        stars : $('#stars2').val()
+                    },
+                    group3 : {
+                        size : $('#groupSize3').val(),
+                        type : $('#accommodationType3').val(),
+                        accSize : $('#accommodationSize3').val(),
+                        stars : $('#stars3').val()
+                    },
+                    group4 : {
+                        size : $('#groupSize4').val(),
+                        type : $('#accommodationType4').val(),
+                        accSize : $('#accommodationSize4').val(),
+                        stars : $('#stars4').val()
+                    },
+                    group5 : {
+                        size : $('#groupSize5').val(),
+                        type : $('#accommodationType5').val(),
+                        accSize : $('#accommodationSize5').val(),
+                        stars : $('#stars5').val()
+                    }
+                }
+            }
+
+
+            $.ajax({
+                url : '/restClient/sendHotelsLook',
+                data : {params : JSON.stringify(params)}
+            })
+
+        }
+
+        var map;
+        var markers = [];
+
+        function initMap() {
+            debugger;
+            var currLocation; //= new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+
+            if(navigator.geolocation) {
+                var browserSupportFlag = true;
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    currLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: currLocation,
+                        zoom: 10
+                    });
+                }, function() {
+                    //handleNoGeolocation(browserSupportFlag);
+                });
+            }
+        }
+
+        function callback(results, status) {
+            debugger;
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    var place = results[i];
+                    addMarker(results[i]);
+                }
+            }
+        }
+
+        function addMarker(place) {
+            debugger;
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location,
+                place : place
+            });
+
+            markers.push(marker);
+
+            google.maps.event.addListener(marker, 'click', function() {
+                service.getDetails(place, function(result, status) {
+                    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                        console.error(status);
+                        return;
+                    }
+                    infoWindow.setContent(result.name);
+                    infoWindow.open(map, marker);
+                });
+            });
+            map.setCenter(place.geometry.location);
+            map.setZoom(15);
+            $('#locationLng').text(place.geometry.location.lng());
+            $('#locationLat').text(place.geometry.location.lat());
+        }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
         }
     </script>
 </body>

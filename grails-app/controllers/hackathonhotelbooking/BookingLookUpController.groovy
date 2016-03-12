@@ -17,6 +17,9 @@ class BookingLookUpController {
             blu.AddGroupSettings();
         }
 
+
+
+
         render view: '/bookingLookUp/index',model: [booking : blu];
     }
 

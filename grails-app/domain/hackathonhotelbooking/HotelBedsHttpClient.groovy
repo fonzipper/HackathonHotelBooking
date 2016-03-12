@@ -14,14 +14,14 @@ import org.apache.http.util.EntityUtils
  * Created by NS on 12/03/16.
  */
 class HotelBedsHttpClient {
-    public static String sendRequest(Map<String,String> params){
+    public static String sendRequest(String params){
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost('http://testapi.hotelbeds.com/hotel-api/1.0/hotels');
         post.addHeader('Api-Key','gfhpht2ffsfejd88g7pcnexe');
         post.addHeader('Content-Type','application/json');
         post.addHeader('Accept','application/json');
 
-        post.setEntity(new StringEntity(params['body']));
+        post.setEntity(new StringEntity(params));
         ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
             @Override
             public String handleResponse(
