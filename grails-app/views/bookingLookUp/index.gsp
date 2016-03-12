@@ -220,28 +220,28 @@
                         stars : $('#stars1').val()
                     },
                     group2 : {
-                        size : $('#groupSize1').val(),
-                        type : $('#accommodationType1').val(),
-                        accSize : $('#accommodationSize1').val(),
-                        stars : $('#stars1').val()
+                        size : $('#groupSize2').val(),
+                        type : $('#accommodationType2').val(),
+                        accSize : $('#accommodationSize2').val(),
+                        stars : $('#stars2').val()
                     },
                     group3 : {
-                        size : $('#groupSize1').val(),
-                        type : $('#accommodationType1').val(),
-                        accSize : $('#accommodationSize1').val(),
-                        stars : $('#stars1').val()
+                        size : $('#groupSize3').val(),
+                        type : $('#accommodationType3').val(),
+                        accSize : $('#accommodationSize3').val(),
+                        stars : $('#stars3').val()
                     },
                     group4 : {
-                        size : $('#groupSize1').val(),
-                        type : $('#accommodationType1').val(),
-                        accSize : $('#accommodationSize1').val(),
-                        stars : $('#stars1').val()
+                        size : $('#groupSize4').val(),
+                        type : $('#accommodationType4').val(),
+                        accSize : $('#accommodationSize4').val(),
+                        stars : $('#stars4').val()
                     },
                     group5 : {
-                        size : $('#groupSize1').val(),
-                        type : $('#accommodationType1').val(),
-                        accSize : $('#accommodationSize1').val(),
-                        stars : $('#stars1').val()
+                        size : $('#groupSize5').val(),
+                        type : $('#accommodationType5').val(),
+                        accSize : $('#accommodationSize5').val(),
+                        stars : $('#stars5').val()
                     }
                 }
             }
