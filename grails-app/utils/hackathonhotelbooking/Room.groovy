@@ -1,9 +1,12 @@
+package hackathonhotelbooking
 public class Room {
     //private int id;
     private def roomCode;
     private int roomPrice;
     private Hotel roomHotelCode;
     private def boardCode;
+    private Integer adults;
+    private Integer children;
     private int [] occupied;
     Room [] rooms;
     public void addRooms(/*string roomCode_I, int roomPrice_I, string boardCode_I, Hotel roomHotelCode_I, int allotment*/ RoomEntry [] roomEntries){
