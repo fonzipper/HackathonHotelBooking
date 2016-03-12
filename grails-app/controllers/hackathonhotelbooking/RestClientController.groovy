@@ -1,6 +1,9 @@
 package hackathonhotelbooking
 
 import groovy.json.JsonSlurper
+import org.joda.time.DateTime
+
+import java.text.SimpleDateFormat
 
 class RestClientController {
 
@@ -13,41 +16,42 @@ class RestClientController {
         BookingLookUp blu = new BookingLookUp();
         blu.xLocation = jsn.lattitude.toDouble();
         blu.yLocation = jsn.longitude?.toDouble();
-        blu.fulltimeCheckIn = Date.parse('mm-dd-yyyy', jsn.checkin);
-        blu.fulltimeCheckOut = Date.parse('mm-dd-yyyy', jsn.checkout);
+        blu.fulltimeCheckIn = DateTime.parse(jsn.checkin);
+        blu.fulltimeCheckOut = DateTime.parse(jsn.checkout);
         blu.radius = jsn.radius?.toDouble();
 
-        blu.groupSettings = new ArrayList<>(5);
+        blu.groupSettings = new ArrayList<>(1);
 
 
-        jsn.groups?.'*'?.each{group ->
+        //jsn.groups?.'*'?.each{group ->
             BookingGroupSettings bgs = new BookingGroupSettings();
-            bgs.groupSize = group.size;
-            bgs.accommodationType = group.type;
-            bgs.accommodationSize = group.accSize;
-            bgs.stars = group.stars?.text();
+            bgs.groupSize = jsn.groups.group1.size.toInteger();
+            bgs.accommodationType = jsn.groups.group1.type;
+            bgs.accommodationSize = jsn.groups.group1.accSize.toInteger();
+            bgs.stars = jsn.groups.group1.stars.toInteger();
+            bgs.maxPrice = 500;
+            bgs.paymentType = 'AT_WEB';
+            bgs.boardType = 'BB';
 
             blu.groupSettings.add(bgs);
-        }
 
-        String [] req = [];
+        //}
+
+        String [] req = [5];
         BookingLookUp searchSettings = blu;
+//        def df = new SimpleDateFormat('yyyy-MM-dd');
 
         for(int i = 0; i<searchSettings.groupSettings.size(); i++) {
             req[i] = """{
             "stay": {
-                "checkIn": "${searchSettings.fulltimeCheckIn}",
-                "checkOut": "${searchSettings.fulltimeCheckOut}"
+                "checkIn": "${searchSettings.fulltimeCheckIn.toString('YYYY-MM-dd')}",
+                "checkOut": "${searchSettings.fulltimeCheckOut.toString('YYYY-MM-dd')}"
             },
             "occupancies": [
                     {
                         "rooms": 1,
-                        "adults": "${
-                searchSettings.groupSettings[i].accommodationType == "a" ? groupSettings.accommodationSize : 2
-            }",
-                        "children": "${
-                searchSettings.groupSettings[i].accommodationType == "f" ? groupSettings.accommodationSize : 0
-            }",
+                        "adults": "${searchSettings.groupSettings[i].accommodationType == "Single" ? searchSettings.groupSettings[i].accommodationSize : 2}",
+                        "children": "${searchSettings.groupSettings[i].accommodationType == "Family" ? searchSettings.groupSettings[i].accommodationSize : 0}",
                         "paxes": [
                             {
                                 "type": "AD",
@@ -57,12 +61,12 @@ class RestClientController {
                                 "type": "AD",
                                 "age": "30"
                             }""" +
-                    (searchSettings.groupSettings[i].accommodationType == "a" && searchSettings.groupSettings[i].accommodationSize == 3 ? (""",
+                    (searchSettings.groupSettings[i].accommodationType == "Single" && searchSettings.groupSettings[i].accommodationSize == 3 ? (""",
                             {
                                 "type": "AD",
                                 "age": "30"
                             }""") : "") +
-                    (searchSettings.groupSettings[i].accommodationType == "a" && searchSettings.groupSettings[i].accommodationSize == 4 ? (""",
+                    (searchSettings.groupSettings[i].accommodationType == "Single" && searchSettings.groupSettings[i].accommodationSize == 4 ? (""",
                             {
                                 "type": "AD",
                                 "age": "30"
@@ -71,7 +75,7 @@ class RestClientController {
                                 "type": "AD",
                                 "age": "30"
                             }""") : "") +
-                    (searchSettings.groupSettings[i].accommodationType == "a" && searchSettings.groupSettings[i].accommodationSize == 5 ? (""",
+                    (searchSettings.groupSettings[i].accommodationType == "Single" && searchSettings.groupSettings[i].accommodationSize == 5 ? (""",
                             {
                                 "type": "AD",
                                 "age": "30"
@@ -84,12 +88,12 @@ class RestClientController {
                                 "type": "AD",
                                 "age": "30"
                             }""") : "") +
-                    (searchSettings.groupSettings[i].accommodationType == "f" && searchSettings.groupSettings[i].accommodationSize == 1 ? (""",
+                    (searchSettings.groupSettings[i].accommodationType == "Family" && searchSettings.groupSettings[i].accommodationSize == 1 ? (""",
                             {
                                 "type": "CH",
                                 "age": "10"
                             }""") : "") +
-                    (searchSettings.groupSettings[i].accommodationType == "f" && searchSettings.groupSettings[i].accommodationSize == 2 ? (""",
+                    (searchSettings.groupSettings[i].accommodationType == "Family" && searchSettings.groupSettings[i].accommodationSize == 2 ? (""",
                             {
                                 "type": "CH",
                                 "age": "10"
@@ -108,27 +112,25 @@ class RestClientController {
                 "minCategory": ${searchSettings.groupSettings[i].stars},
                 "maxCategory": 5,
                 "paymentType": "${searchSettings.groupSettings[i].paymentType}",
-                "maxRate": "${searchSettings.groupSettings[i].maxPrice}"
-            },""" + (searchSettings.groupSettings[i].boardType != null) ? ("""
-            "boards": {
-                "included": true,
-                "board": [
-                        "${searchSettings.groupSettings[i].boardType}"
-                ]
-            },""") : "" + """
+                "maxRate": "${searchSettings.groupSettings.get(i).maxPrice}"
+            },
             "geolocation": {
                 "radius": ${searchSettings.radius},
                 "latitude": ${searchSettings.xLocation},
                 "longitude": ${searchSettings.yLocation},
                 "unit": "km"
             }
-        }"""
-        }
-        for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
-            HotelBedsHttpClient.sendRequest(req[j]);
+        }""";
+            System.out.println(req[0]);
         }
 
+        def results = [];
+
+        for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
+            results.add(HotelBedsHttpClient.sendRequest(req[j]));
+        }
+        System.out.println(results[0]);
 //        String response = HotelBedsHttpClient.sendRequest(req);
-        render view: '/bookingLookUp/index'
+        render view: '/bookingLookUp/index', model: [booking : blu]
     }
 }
