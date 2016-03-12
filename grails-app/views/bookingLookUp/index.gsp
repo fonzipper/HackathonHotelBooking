@@ -206,9 +206,14 @@
         }
 
         function roomsSearch(){
+            debugger;
+
+//            $('#locationLat').text()
+//            $('#locationLng').text()
+
             params = {
-                lattitude : $('#locationLat').text(),
-                longitude : $('#locationLng').text(),
+                lattitude : 52.5186202,
+                longitude : 13.3739984,
                 checkin : $('#ftCheckIn').val(),
                 checkout : $('#ftCheckOut').val(),
                 radius : $('#lookupRadius').val(),
