@@ -11,7 +11,7 @@ function initMap() {
             currLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             map = new google.maps.Map(document.getElementById('map'), {
                 center: currLocation,
-                zoom: 15
+                zoom: 10
             });
         }, function() {
             //handleNoGeolocation(browserSupportFlag);
@@ -50,6 +50,7 @@ function addMarker(place) {
         });
     });
     map.setCenter(place.geometry.location);
+    map.setZoom(15);
 }
 
 // Sets the map on all markers in the array.

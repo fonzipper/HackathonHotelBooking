@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.min.css')}" type="text/css">
+    <g:javascript library="jquery" />
     <style type="text/css">
         body {
             padding-top: 50px;
@@ -21,8 +22,8 @@
             height: 500px;
         }
         .hidden {
-            /*display: none;*/
-            visibility: hidden;
+            display: none;
+            /*visibility: hidden;*/
         }
     </style>
 </head>
@@ -49,20 +50,21 @@
         </div>
     </div>
     <div class="container">
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Hotel booking lookup</h2>
-            </div>
-        </div>
+<br/>
+        %{--<div class="row">--}%
+            %{--<div class="col-lg-12">--}%
+                %{--<h2>Hotel booking lookup</h2>--}%
+            %{--</div>--}%
+        %{--</div>--}%
         <div class="row">
             <div class="col-md-6">
                 <form class="form-horizontal" role="form" title="Location lookup form" action="#">
+                    <legend>Location</legend>
                     <div class="form-group">
                         <label for="cityLookup" class="col-sm-5 control-label">City/Country</label>
                         <div class="col-sm-7">
                             <input id="cityLookup" type="text" class="form-control" placeholder="search for a city..."
-                                   value="${booking.city}" onchange="doSearch()"/>
+                                   value="${booking.city}" onchange="doCitySearch()"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -74,7 +76,7 @@
                     </div>
                 </form>
 
-                <form class="form-horizontal" role="form" title="Search criteria form">
+                <form class="form-horizontal" role="form" title="Search criteria form" id="criteriaForm">
                     <div class="form-group">
                         <label for="lookupRadius" class="col-sm-5 control-label">Radius</label>
                         <div class="col-sm-7">
@@ -86,30 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    %{--<hr>--}%
-
-                    %{--<div class="form-group">--}%
-                        %{--<label class="col-sm-4 control-label">Filter criteria</label>--}%
-                    %{--</div>--}%
                     <legend>Full-time accommodation</legend>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label" for="memberCount">Number of members</label>
-                        <div class="col-sm-7">
-                            <input id="memberCount" type="number" class="form-control" value="${booking.membersCount}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label" for="familyCount">Members with family</label>
-                        <div class="col-sm-7">
-                            <input id="familyCount" type="number" class="form-control" value="${booking.familySuitNumber}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label" for="accommodationBy">Accommodation, people per room</label>
-                        <div class="col-sm-7">
-                            <input id="accommodationBy" type="number" class="form-control" value="${booking.accommodationQuantity}">
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="ftCheckIn">Check in</label>
                         <div class="col-sm-7">
@@ -122,6 +101,40 @@
                             <input id="ftCheckOut" type="date" class="form-control" value="${booking.fulltimeCheckOut}">
                         </div>
                     </div>
+                    <button type="button" class="btn btn-default" onclick="addGroup()">Add group</button>
+                    <g:each in="${booking.groupSettings}" var="setting">
+                        <div class="hidden" id="groupsettings${setting.innerId}">
+                            <legend>Group ${setting.innerId} settings</legend>
+                            <div class="form-group">
+                                <label for="groupSize${setting.innerId}" class="col-md-5 control-label">Group size</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" id="groupSize${setting.innerId}" type="number" value="${setting.groupSize}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="accommodationType${setting.innerId}" class="col-md-5 control-label">AccommodationType</label>
+                                <div class="col-md-7">
+                                    <select class="form-control" id="accommodationType${setting.innerId}" value="${setting.accommodationType}">
+                                        <option>Single</option>
+                                        <option>Family</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="accommodationSize${setting.innerId}" class="col-md-5 control-label">Accommodation/Children</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" id="accommodationSize${setting.innerId}" type="number" value="${setting.accommodationSize}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="stars${setting.innerId}" class="col-md-5 control-label">Hotel, stars</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" id="stars${setting.innerId}" type="number" value="${setting.stars}">
+                                </div>
+                            </div>
+                        </div>
+                    </g:each>
+
                     <legend>Part-time accommodation</legend>
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="executivesCount">Executive members</label>
@@ -142,25 +155,22 @@
     </script>
     <script src="/static/js/map.js" type="text/javascript"></script>
     <script src="/static/js/jquery.js" type="text/javascript"></script>
-
-    %{--<link rel="javascript" href="${resource(dir: 'js', file: 'map.js')}" type="text/javascript">--}%
-    %{--<link rel="javascript" href="${resource(dir: 'js', file: 'jquery.js')}" type="text/javascript">--}%
     <link rel="javascript" href="${resource(dir: 'js', file: 'bootstrap.min.js')}" type="text/javascript">
     <script type="text/javascript">
+        var visibleGroups = 0;
+
         function doSearch() {
             debugger;
 
             setMapOnAll(null);
-//            $("#map").removeClass("hidden");
-            var searchStr = $("#hotelLookup").val();
+            var searchStr = $("#locationLookup").val();
             if (searchStr != null && searchStr != "") {
-//                initMap(searchStr);
 
                 var currLocation = map.getCenter();
 
                 var request = {
                     location: currLocation,
-                    radius: '500',
+                    radius: '50',
                     units : 'km',
                     query: searchStr
                 };
@@ -168,6 +178,28 @@
                 service = new google.maps.places.PlacesService(map);
                 service.textSearch(request, callback);
             }
+        }
+
+        function doCitySearch() {
+            setMapOnAll(null);
+            var searchStr = $("#cityLookup").val();
+            if (searchStr != null && searchStr != "") {
+
+//                var currLocation = map.getCenter();
+
+                var request = {
+                    query: searchStr
+                };
+
+                service = new google.maps.places.PlacesService(map);
+                service.textSearch(request, callback);
+            }
+        }
+
+
+        function addGroup(){
+            if (visibleGroups < 5) visibleGroups++;
+            $("#groupsettings"+visibleGroups).removeClass("hidden");
         }
     </script>
 </body>
