@@ -1,5 +1,7 @@
 package hackathonhotelbooking
 
+import org.joda.time.DateTime
+
 class BookingLookUp {
     private Integer commonSuitNumber;
     private Integer familySuitNumber;
@@ -7,8 +9,8 @@ class BookingLookUp {
     private Integer membersCount;
     private String accommodationQuantity;
 
-    private Date fulltimeCheckIn;
-    private Date fulltimeCheckOut;
+    private DateTime fulltimeCheckIn;
+    private DateTime fulltimeCheckOut;
 
     private Date[] parttimeCheckIn;
     private Date[] parttimeCheckOut;
@@ -121,19 +123,19 @@ class BookingLookUp {
         this.accommodationQuantity = accommodationQuantity
     }
 
-    Date getFulltimeCheckOut() {
+    DateTime getFulltimeCheckOut() {
         return fulltimeCheckOut
     }
 
-    void setFulltimeCheckOut(Date checkOut) {
+    void setFulltimeCheckOut(DateTime checkOut) {
         this.fulltimeCheckOut = checkOut
     }
 
-    Date getFulltimeCheckIn() {
+    DateTime getFulltimeCheckIn() {
         return fulltimeCheckIn
     }
 
-    void setFulltimeCheckIn(Date checkIn) {
+    void setFulltimeCheckIn(DateTime checkIn) {
         this.fulltimeCheckIn = checkIn
     };
 
