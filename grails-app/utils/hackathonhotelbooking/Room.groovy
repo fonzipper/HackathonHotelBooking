@@ -16,6 +16,16 @@ public class Room {
             }
         }
     }
+Integer getAdults(){
+return adults
+}
+void setAdults(Integer adults){this.adults=adults
+}
+Integer getChildren(){
+return children
+}
+void setChildren(Integer children){this.children=children
+}
 /*int getId(){
 return id
 }

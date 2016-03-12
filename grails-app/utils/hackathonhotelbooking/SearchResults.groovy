@@ -4,8 +4,6 @@ package hackathonhotelbooking
  */
 
 public class SearchResults {
-    public Result[] getResults(int numberOfFull, Room [] rooms, Hotel a){
-
-
-    }
+    private List<Room> rooms;
+    private List<Hotel> hotels;
 }
