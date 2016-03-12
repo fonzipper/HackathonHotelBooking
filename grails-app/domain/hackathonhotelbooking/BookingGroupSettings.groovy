@@ -8,8 +8,8 @@ class BookingGroupSettings {
     private String name;
     private int innerId;
     private Integer maxPrice;
-    private Integer paymentType;
-    private Integer boardType;
+    private String paymentType;
+    private String boardType;
 
     Integer getMaxPrice() {
         return maxPrice
@@ -19,19 +19,19 @@ class BookingGroupSettings {
         this.maxPrice = maxPrice
     }
 
-    Integer getPaymentType() {
+    String getPaymentType() {
         return paymentType
     }
 
-    void setPaymentType(Integer paymentType) {
+    void setPaymentType(String paymentType) {
         this.paymentType = paymentType
     }
 
-    Integer getBoardType() {
+    String getBoardType() {
         return boardType
     }
 
-    void setBoardType(Integer boardType) {
+    void setBoardType(String boardType) {
         this.boardType = boardType
     }
 
