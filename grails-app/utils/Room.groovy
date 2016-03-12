@@ -1,9 +1,9 @@
 public class Room {
     //private int id;
-    private string roomCode;
+    private def roomCode;
     private int roomPrice;
     private Hotel roomHotelCode;
-    private string boardCode;
+    private def boardCode;
     private int [] occupied;
     Room [] rooms;
     public void addRooms(/*string roomCode_I, int roomPrice_I, string boardCode_I, Hotel roomHotelCode_I, int allotment*/ RoomEntry [] roomEntries){
@@ -18,10 +18,10 @@ return id
 }
 void setId(int id){this.id=id
 }*/
-    public string getRoomCode(){
+    public def getRoomCode(){
 return roomCode
 }
-void setRoomCode(string roomCode){this.roomCode=roomCode
+void setRoomCode(def roomCode){this.roomCode=roomCode
 }
     public int getRoomPrice(){
 return roomPrice
@@ -33,10 +33,10 @@ return roomHotelCode
 }
 void setRoomHotelCode(Hotel roomHotelCode){this.roomHotelCode=roomHotelCode
 }
-    public string getBoardCode(){
+    public def getBoardCode(){
 return boardCode
 }
-void setBoardCode(string boardCode){this.boardCode=boardCode
+void setBoardCode(def boardCode){this.boardCode=boardCode
 }
     public int[] getOccupied(){
 return occupied

@@ -2,16 +2,16 @@
  * Created by Punker on 12.03.2016.
  */
 public class RoomEntry {
-    private string roomCode_I;
+    private def roomCode_I;
     private int roomPrice_I;
-    private string boardCode_I;
+    private def boardCode_I;
     private Hotel roomHotelCode_I;
     private int allotment;
-    public string getRoomCode_I() {
+    public def getRoomCode_I() {
         return roomCode_I;
     }
 
-    void setRoomCode_I(string roomCode_I) {
+    void setRoomCode_I(def roomCode_I) {
         this.roomCode_I = roomCode_I;
     }
 
@@ -23,11 +23,11 @@ public class RoomEntry {
         this.roomPrice_I = roomPrice_I;
     }
 
-    public string getBoardCode_I() {
+    public def getBoardCode_I() {
         return boardCode_I;
     }
 
-    void setBoardCode_I(string boardCode_I) {
+    void setBoardCode_I(def boardCode_I) {
         this.boardCode_I = boardCode_I;
     }
 
