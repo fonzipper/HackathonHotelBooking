@@ -25,7 +25,6 @@ class RestClientController {
 
 
         jsn.groups?.each{group ->
-            System.out.println('fuck off');
             BookingGroupSettings bgs = new BookingGroupSettings();
             if (group.size) {
                 bgs.groupSize = group.size?.toInteger();
