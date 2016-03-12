@@ -147,7 +147,7 @@
                 <form class="form-horizontal" role="form" title="Search criteria form" id="partTimeCriteriaForm">
                     <legend>Part-time accommodation</legend>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="executivesCount">Executive members</label>
+                        <label class="col-sm-5 control-label" for="executivesCount">Members</label>
                         <div class="col-sm-7">
                             <input id="executivesCount" type="number" class="form-control" value="${booking.vipSuitNumber}">
                         </div>
@@ -219,8 +219,8 @@
 //            $('#locationLng').text()
 
             params = {
-                longitude : 37.61725271047851,
-                lattitude : 55.733193481733345,
+                longitude : $('#locationLat').text(),
+                lattitude : $('#locationLng').text(),
                 checkin : $('#ftCheckIn').val(),
                 checkout : $('#ftCheckOut').val(),
                 radius : $('#lookupRadius').val(),
