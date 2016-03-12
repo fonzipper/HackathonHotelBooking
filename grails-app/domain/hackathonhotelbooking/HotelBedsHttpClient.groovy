@@ -1,3 +1,5 @@
+package hackathonhotelbooking
+
 import org.apache.http.HttpEntity
 import org.apache.http.HttpResponse
 import org.apache.http.client.ClientProtocolException
@@ -11,7 +13,7 @@ import org.apache.http.util.EntityUtils
 /**
  * Created by NS on 12/03/16.
  */
-class HotelBedsHTTPClient {
+class HotelBedsHttpClient {
     public static String sendRequest(Map<String,String> params){
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost('http://testapi.hotelbeds.com/hotel-api/1.0/hotels');
