@@ -10,6 +10,11 @@ class BookingLookUp {
     private Date fulltimeCheckIn;
     private Date fulltimeCheckOut;
 
+    private Date[] parttimeCheckIn;
+    private Date[] parttimeCheckOut;
+
+    private List<BookingGroupSettings> groupSettings;
+
 
     private double xLocation;
     private double yLocation;
@@ -19,11 +24,23 @@ class BookingLookUp {
     private String city;
     private String location;
 
-    public BookingLookUp() {
+//    public BookingLookUp() {
+//
+//    }
 
+    public List<BookingGroupSettings> AddGroupSettings(){
+        if (this.groupSettings == null) {
+            this.groupSettings = new ArrayList<>();
+        }
+
+        BookingGroupSettings bgs = new BookingGroupSettings();
+        bgs.innerId = this.groupSettings.size() + 1;
+
+        this.groupSettings.add(bgs);
+
+//        System.out.println(this.groupSettings.size());
+        return this.groupSettings;
     }
-
-
 
     Integer getCommonSuitNumber() {
         return commonSuitNumber
@@ -120,4 +137,28 @@ class BookingLookUp {
     void setFulltimeCheckIn(Date checkIn) {
         this.fulltimeCheckIn = checkIn
     };
+
+    Date[] getParttimeCheckOut() {
+        return parttimeCheckOut
+    }
+
+    void setParttimeCheckOut(Date[] parttimeCheckOut) {
+        this.parttimeCheckOut = parttimeCheckOut
+    }
+
+    Date[] getParttimeCheckIn() {
+        return parttimeCheckIn
+    }
+
+    void setParttimeCheckIn(Date[] parttimeCheckIn) {
+        this.parttimeCheckIn = parttimeCheckIn
+    }
+
+    List<BookingGroupSettings> getGroupSettings() {
+        return groupSettings
+    }
+
+    void setGroupSettings(List<BookingGroupSettings> groupSettings) {
+        this.groupSettings = groupSettings
+    }
 }
