@@ -55,12 +55,18 @@ class RestClientController {
                 blus.add(bluItem);
             }
         }
-
-
-        for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
-            results.add(HotelBedsHttpClient.sendRequest(req[j]));
+        String [][] requests = RequestParser.prepareRequest(blus);
+        String [][] responses = [];
+        for (int month = 0; month < requests.length; month++) {
+            for (int group = 0; group < requests[month].length; group++) {
+                responses[month][group] = HotelBedsHttpClient.sendRequest(requests[month][group])
+            }
         }
-        System.out.println(results[0]);
+        RequestParser.parseResponse(responses);
+        /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
+            results.add(HotelBedsHttpClient.sendRequest(req[j]));
+        }*/
+        //System.out.println(results[0]);
 //        String response = HotelBedsHttpClient.sendRequest(req);
         render view: '/bookingLookUp/index', model: [booking : blu]
     }
