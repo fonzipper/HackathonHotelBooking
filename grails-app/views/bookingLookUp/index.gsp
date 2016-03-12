@@ -19,7 +19,7 @@
             padding-top: 50px;
         }
         #map {
-            height: 500px;
+            height: 250px;
         }
         .hidden {
             display: none;
@@ -52,12 +52,7 @@
     <div class="container">
 <br/>
         <div class="row">
-            <div class="col-lg-12">
-                <div id="map"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <form class="form-horizontal" role="form" title="Location lookup form" action="#">
                     <div id="locationLat" class="hidden"></div>
                     <div id="locationLng" class="hidden"></div>
@@ -76,9 +71,6 @@
                                    value="${booking.location}" onchange="doSearch()"/>
                         </div>
                     </div>
-                </form>
-
-                <form class="form-horizontal" role="form" title="Search criteria form" id="criteriaForm">
                     <div class="form-group">
                         <label for="lookupRadius" class="col-sm-5 control-label">Radius</label>
                         <div class="col-sm-7">
@@ -90,6 +82,19 @@
                             </div>
                         </div>
                     </div>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <div id="map"></div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+
+
+                <form class="form-horizontal" role="form" title="Search criteria form" id="fullTimeCriteriaForm">
+
                     <legend>Full-time accommodation</legend>
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="ftCheckIn">Check in</label>
@@ -103,7 +108,6 @@
                             <input id="ftCheckOut" type="date" class="form-control" value="${booking.fulltimeCheckOut}">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" onclick="addGroup()">Add group</button>
                     <g:each in="${booking.groupSettings}" var="setting">
                         <div class="hidden" id="groupsettings${setting.innerId}">
                             <legend>Group ${setting.innerId} settings</legend>
@@ -129,28 +133,31 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="stars${setting.innerId}" class="col-md-5 control-label">Hotel, stars</label>
+                                <label for="stars${setting.innerId}" class="col-md-5 control-label">Hotel stars</label>
                                 <div class="col-md-7">
                                     <input class="form-control" id="stars${setting.innerId}" type="number" value="${setting.stars}">
                                 </div>
                             </div>
                         </div>
                     </g:each>
-
+                    <button type="button" class="btn btn-default" onclick="addGroup()">Add group</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form class="form-horizontal" role="form" title="Search criteria form" id="partTimeCriteriaForm">
                     <legend>Part-time accommodation</legend>
                     <div class="form-group">
-                        <label class="col-sm-5 control-label" for="executivesCount">Executive members</label>
+                        <label class="col-sm-5 control-label" for="executivesCount">Members</label>
                         <div class="col-sm-7">
                             <input id="executivesCount" type="number" class="form-control" value="${booking.vipSuitNumber}">
                         </div>
                     </div>
                 </form>
-                <button class="button button-default" onclick="roomsSearch(); return false;">Search</button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-default" onclick="roomsSearch(); return false;">Search</button>
             </div>
         </div>
-
     </div><!-- /.container -->
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbBdqhK286kQ6l1W5C28tqF2n8LcNqAAI&libraries=places&callback=initMap">
@@ -202,6 +209,7 @@
         function addGroup(){
             if (visibleGroups < 5) visibleGroups++;
             $("#groupsettings"+visibleGroups).removeClass("hidden");
+            $('#groupSize'+visibleGroups).focus();
         }
 
         function roomsSearch(){
@@ -211,44 +219,44 @@
 //            $('#locationLng').text()
 
             params = {
-                longitude : 37.61725271047851,
-                lattitude : 55.733193481733345,
+                longitude : $('#locationLat').text(),
+                lattitude : $('#locationLng').text(),
                 checkin : $('#ftCheckIn').val(),
                 checkout : $('#ftCheckOut').val(),
                 radius : $('#lookupRadius').val(),
-                groups : {
-                    group1 : {
+                groups : [
+                    {
                         size : $('#groupSize1').val(),
                         type : $('#accommodationType1').val(),
                         accSize : $('#accommodationSize1').val(),
                         stars : $('#stars1').val()
                     },
-                    group2 : {
+                    {
                         size : $('#groupSize2').val(),
                         type : $('#accommodationType2').val(),
                         accSize : $('#accommodationSize2').val(),
                         stars : $('#stars2').val()
                     },
-                    group3 : {
+                    {
                         size : $('#groupSize3').val(),
                         type : $('#accommodationType3').val(),
                         accSize : $('#accommodationSize3').val(),
                         stars : $('#stars3').val()
                     },
-                    group4 : {
+                    {
                         size : $('#groupSize4').val(),
                         type : $('#accommodationType4').val(),
                         accSize : $('#accommodationSize4').val(),
                         stars : $('#stars4').val()
                     },
-                    group5 : {
+                    {
                         size : $('#groupSize5').val(),
                         type : $('#accommodationType5').val(),
                         accSize : $('#accommodationSize5').val(),
                         stars : $('#stars5').val()
                     }
-                }
-            }
+                ]
+            };
 
 
             $.ajax({
