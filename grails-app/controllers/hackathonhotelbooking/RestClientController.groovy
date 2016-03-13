@@ -73,7 +73,7 @@ class RestClientController {
         /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
             results.add(HotelBedsHttpClient.sendRequest(req[j]));
         }*/
-        System.out.println(groups[0].roomTypes.size());
+//        System.out.println(groups[0].roomTypes.size());
 //        String response = HotelBedsHttpClient.sendRequest(req);
 
         render template: '/layouts/resultList', model: [booking : blu, roomGroups : groups]

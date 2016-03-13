@@ -23,8 +23,8 @@ class SetAvailability {
                     }
                 }
                 RoomType rt_res = new RoomType();
-                rt_res.roomName = rt.roomName;
-                rt_res.boardName = rt.boardName;
+                rt_res.roomName = rt.roomName.capitalize();
+                rt_res.boardName = rt.boardName.capitalize();
                 rt_res.hotelName = rt.hotelName;
                 rt_res.roomPrice = price;
                 rt_res.roomCode = rt.roomCode;
@@ -43,10 +43,10 @@ class SetAvailability {
                     }
                 }
                 rt_res.availability = (alsum/allotments.size())/almax;
-                rt_res.rating = rt_res.allotment * rt_res.availability * rt_res.hotelStars / rt_res.roomPrice;
+                rt_res.rating = Integer.valueOf(rt_res.minFullAvailable) * rt_res.hotelStars / rt_res.roomPrice;
                 groups[group].roomTypes.add(rt_res);
             }
-//            groups[group].roomTypes = groups[group].roomTypes.sort{it.rating};
+            groups[group].roomTypes = groups[group].roomTypes.sort{it.rating};
         }
         return groups;
     }

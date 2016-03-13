@@ -5,12 +5,10 @@ import groovy.json.JsonSlurper
  */
 class RequestParser {
     public static String[][] prepareRequest(List<BookingLookUp> searchSettings) {
-        System.out.println(searchSettings.size());
         String[][] req = new String [searchSettings.size()][searchSettings[0]?.groupSettings?.size()];
         for (int month = 0; month < searchSettings.size(); month++) {
 
             for (int group = 0; group < searchSettings[month].groupSettings.size(); group++) {
-//                req[month] = [searchSettings[month].groupSettings.size()];
                 String per = """{
             "stay": {
                 "checkIn": "${searchSettings[month].fulltimeCheckIn.toString('YYYY-MM-dd')}",
@@ -95,7 +93,6 @@ class RequestParser {
             }
         }""";
                 req[month][group] = per;
-                System.out.println(per)
             }
         }
         return req;
@@ -110,7 +107,6 @@ class RequestParser {
                 List<Hotel> hotels = new ArrayList<>();
                 JsonSlurper jsonSlurper = new JsonSlurper();
                 def result = jsonSlurper.parseText(res[month][group]);
-                System.out.println(res[month][group])
                 int total = result.hotels.total;
                 result.hotels.hotels?.each{hotel ->
                     Hotel htl = new Hotel();
@@ -136,14 +132,15 @@ class RequestParser {
                             rm.children= rate.children;
                             rm.allotment=rate.allotment;
                             String ct = hotel.categoryName;
-                            if (ct == 'HOSTEL')
-                                rm.hotelStars=1;
+
+                            def st = ct.find(/\d/);
+
+                            if (st == null)
+                                rm.hotelStars=2;
                             else{
-                                def st = ct.substring(0,1);
                                 rm.hotelStars = st.toInteger();
                             }
                             roomtypes.add(rm);
-                            System.out.println('+++');
                         }
                     }
                 }
