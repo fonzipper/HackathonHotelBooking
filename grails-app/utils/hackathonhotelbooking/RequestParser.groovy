@@ -105,7 +105,7 @@ class RequestParser {
         SearchResults [][] searchResults = new SearchResults [res.length][res[0].length];
         for (int month = 0; month < res.length; month++) {
             for (int group = 0; group < res[month].length; group++) {
-                List<Room> rooms = new ArrayList<>();
+                List<RoomType> roomtypes = new ArrayList<>();
                 List<Hotel> hotels = new ArrayList<>();
                 JsonSlurper jsonSlurper = new JsonSlurper();
                 def result = jsonSlurper.parseText(res[month][group]);
@@ -122,7 +122,7 @@ class RequestParser {
 
                     hotel.rooms?.each{room ->
                         room.rates?.each { rate ->
-                            Room rm = new Room();
+                            RoomType rm = new RoomType();
                             /*rooms.add(new Room(roomCode:room.code,
                                     roomPrice: rate.net,
                                     roomHotelCode:result.hotels.hotels[k].code,
@@ -135,16 +135,17 @@ class RequestParser {
                             rm.roomPrice= rate.net;
                             rm.roomHotelCode=hotel.code;
                             rm.boardCode=rate.boardCode;
-                            rm.occupied=[];
+                            //rm.occupied=[];
                             rm.adults= rate.adults;
                             rm.children= rate.children;
-                            rooms.add(rm);
+                            rm.allotment=rate.allotment;
+                            roomtypes.add(rm);
                         }
                     }
                 }
                 SearchResults sr = new SearchResults()
                 sr.hotels = hotels;
-                sr.rooms = rooms;
+                sr.roomTypes = roomtypes;
                 searchResults[month][group] = sr;
             }
         }

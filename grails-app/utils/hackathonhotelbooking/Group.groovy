@@ -1,11 +1,10 @@
 package hackathonhotelbooking
-/**
- * Created by Punker on 12.03.2016.
- */
 
-public class SearchResults {
+/**
+ * Created by Punker on 13.03.2016.
+ */
+class Group {
     private List<RoomType> roomTypes;
-    private List<Hotel> hotels;
 
     List<RoomType> getRoomTypes() {
         return roomTypes
@@ -13,13 +12,5 @@ public class SearchResults {
 
     void setRoomTypes(List<RoomType> roomTypes) {
         this.roomTypes = roomTypes
-    }
-
-    List<Hotel> getHotels() {
-        return hotels
-    }
-
-    void setHotels(List<Hotel> hotels) {
-        this.hotels = hotels
     }
 }
