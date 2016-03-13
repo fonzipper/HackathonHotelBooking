@@ -44,6 +44,7 @@ class SetAvailability {
                 }
                 rt_res.availability = (alsum/allotments.size())/almax;
                 rt_res.rating = Integer.valueOf(rt_res.minFullAvailable) * rt_res.hotelStars / rt_res.roomPrice;
+                rt_res.occupied = new ArrayList<>();
                 groups[group].roomTypes.add(rt_res);
             }
             groups[group].roomTypes = groups[group].roomTypes.sort{it.rating};

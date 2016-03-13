@@ -70,12 +70,19 @@ class RestClientController {
         def parsedResponse = RequestParser.parseResponse(responses, blus[0].getGroupSettings());
 
         Group[] groups = SetAvailability.setAvailability(parsedResponse);
+        GroupOptions[] gOptions = PrepareVariants.prepareVariants(groups);
+        List<Group> sortedGroups = new ArrayList<>(groups.size()*gOptions.size());
+        for (int i = 0; i < gOptions.length ; i++) {
+            for(int j = 0; j < gOptions[i].groups4Option.size(); j++){
+                sortedGroups.putAt(i+gOptions.length*j,gOptions[i].groups4Option[j])
+            }
+        }
         /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
             results.add(HotelBedsHttpClient.sendRequest(req[j]));
         }*/
 //        System.out.println(groups[0].roomTypes.size());
 //        String response = HotelBedsHttpClient.sendRequest(req);
 
-        render template: '/layouts/resultList', model: [booking : blu, roomGroups : groups]
+        render template: '/layouts/resultList', model: [booking : blu, roomGroups : sortedGroups]
     }
 }

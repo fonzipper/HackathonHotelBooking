@@ -7,6 +7,7 @@ class PrepareVariants {
     public static GroupOptions [] prepareVariants(Group [] groups){
         GroupOptions [] gros = new GroupOptions[3];
         GroupOptions gro1 = new GroupOptions();
+        gro1.groups4Option = new ArrayList<>(groups.size());
 
         for (int i = 0; i < groups.length; i++) {
             Integer groups_number = 0
@@ -19,7 +20,9 @@ class PrepareVariants {
                     }
                 }
                 rt.availability = 100;
-                rt.occupied.add(0);
+                rt.occupied.add(0)
+                gro1.groups4Option.putAt(i, new Group());
+                gro1.groups4Option[i].roomTypes = new ArrayList<>();
                 gro1.groups4Option[i].roomTypes.add(rt);
                 if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
                     break;
@@ -27,6 +30,7 @@ class PrepareVariants {
             }
         }
         GroupOptions gro2 = new GroupOptions();
+        gro2.groups4Option = new ArrayList<>(groups.size());
 
         for (int i = 0; i < groups.length; i++) {
             Integer groups_number = 0
@@ -43,7 +47,9 @@ class PrepareVariants {
                 }
                 rt.availability = 100 - (100/(rt.maxFullAvailable - rt.minFullAvailable));
                 rt.occupied.add(1);
-                gro1.groups4Option[i].roomTypes.add(rt);
+                gro2.groups4Option.putAt(i, new Group());
+                gro2.groups4Option[i].roomTypes = new ArrayList<>();
+                gro2.groups4Option[i].roomTypes.add(rt);
                 if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
                     break;
                 }
@@ -51,6 +57,7 @@ class PrepareVariants {
         }
 
         GroupOptions gro3 = new GroupOptions();
+        gro3.groups4Option = new ArrayList<>(groups.size());
 
         for (int i = 0; i < groups.length; i++) {
             Integer groups_number = 0
@@ -67,12 +74,18 @@ class PrepareVariants {
                 }
                 rt.availability = 100 - (2*(100/(rt.maxFullAvailable - rt.minFullAvailable)));
                 rt.occupied.add(2);
-                gro1.groups4Option[i].roomTypes.add(rt);
+                gro3.groups4Option.putAt(i, new Group());
+                gro3.groups4Option[i].roomTypes = new ArrayList<>();
+                gro3.groups4Option[i].roomTypes.add(rt);
                 if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
                     break;
                 }
             }
         }
+
+        gros[0] = gro1;
+        gros[1] = gro2;
+        gros[2] = gro3;
 
         return gros;
 
