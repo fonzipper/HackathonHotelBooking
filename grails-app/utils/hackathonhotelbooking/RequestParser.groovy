@@ -139,6 +139,11 @@ class RequestParser {
                             rm.adults= rate.adults;
                             rm.children= rate.children;
                             rm.allotment=rate.allotment;
+                            def ct = hotel.categoryName;
+                            if (ct == 'HOSTEL')
+                                rm.hotelStars=1;
+                            else
+                                rm.hotelStars = ct.split(' ')[0].toInteger;
                             roomtypes.add(rm);
                         }
                     }
