@@ -20,12 +20,16 @@ class SetAvailability {
                     }
                 }
                 RoomType rt_res = new RoomType();
+                rt_res.roomName = rt.roomName;
+                rt_res.boardName = rt.boardName;
+                rt_res.hotelName = rt.hotelName;
                 rt_res.roomPrice = price;
                 rt_res.roomCode = rt.roomCode;
                 rt_res.roomHotelCode = rt.roomHotelCode;
                 rt_res.boardCode = rt.boardCode;
                 rt_res.adults = rt.adults;
                 rt_res.children = rt.children;
+                rt_res.maxFullAvailable = allotments.max();
                 rt_res.minFullAvailable = allotments.min();
                 rt_res.availability = (allotments.sum()/allotments.size())/allotments.max();
                 rt_res.rating = rt_res.allotment * rt_res.availability * rt_res.hotelStars / rt_res.roomPrice;

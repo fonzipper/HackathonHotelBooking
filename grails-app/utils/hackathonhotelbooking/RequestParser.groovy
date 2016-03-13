@@ -132,10 +132,12 @@ class RequestParser {
                                     children: rate.children
                             ));*/
                             rm.roomCode=room.code;
+                            rm.roomName = room.name;
                             rm.roomPrice= rate.net;
                             rm.roomHotelCode=hotel.code;
+                            rm.hotelName = hotel.name;
                             rm.boardCode=rate.boardCode;
-                            //rm.occupied=[];
+                            rm.boardName = rate.boardName;
                             rm.adults= rate.adults;
                             rm.children= rate.children;
                             rm.allotment=rate.allotment;
