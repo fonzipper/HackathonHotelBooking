@@ -9,6 +9,8 @@ public class RoomType {
     private int allotment;
     private int minFullAvailable;
     private int availability;
+    private double rating;
+    public int hotelStars;
 
     String getRoomCode() {
         return roomCode
@@ -80,5 +82,21 @@ public class RoomType {
 
     void setAvailability(int availability) {
         this.availability = availability
+    }
+
+    double getRating() {
+        return rating
+    }
+
+    void setRating(double rating) {
+        this.rating = rating
+    }
+
+    int getHotelStars() {
+        return hotelStars
+    }
+
+    void setHotelStars(int hotelStars) {
+        this.hotelStars = hotelStars
     }
 }
