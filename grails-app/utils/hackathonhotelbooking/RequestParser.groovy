@@ -5,7 +5,8 @@ import groovy.json.JsonSlurper
  */
 class RequestParser {
     public static String[][] prepareRequest(List<BookingLookUp> searchSettings) {
-        String[][] req = new String [searchSettings.size()][searchSettings[0].groupSettings.size()];
+        System.out.println(searchSettings.size());
+        String[][] req = new String [searchSettings.size()][searchSettings[0]?.groupSettings?.size()];
         for (int month = 0; month < searchSettings.size(); month++) {
 
             for (int group = 0; group < searchSettings[month].groupSettings.size(); group++) {
@@ -84,7 +85,7 @@ class RequestParser {
                 "minCategory": ${searchSettings[month].groupSettings[group].stars},
                 "maxCategory": 5,
                 "paymentType": "AT_WEB",
-                "maxRate": "500"
+                "maxRate": "50000"
             },
             "geolocation": {
                 "radius": ${searchSettings[month].radius},
@@ -94,7 +95,7 @@ class RequestParser {
             }
         }""";
                 req[month][group] = per;
-                System.out.println('!!request!!'+req[month][group]);
+                System.out.println(per)
             }
         }
         return req;
@@ -109,15 +110,16 @@ class RequestParser {
                 List<Hotel> hotels = new ArrayList<>();
                 JsonSlurper jsonSlurper = new JsonSlurper();
                 def result = jsonSlurper.parseText(res[month][group]);
+                System.out.println(res[month][group])
                 int total = result.hotels.total;
                 result.hotels.hotels?.each{hotel ->
                     Hotel htl = new Hotel();
 
                     htl.hotelCode = hotel.code;
                     htl.hotelName = hotel.name;
-                    htl.hotelCategory = hotel.categoryName;
-                    htl.minRate = hotel.minRate;
-                    htl.maxRate = hotel.maxRate;
+//                    htl.hotelCategory = hotel.categoryName;
+//                    htl.minRate = hotel.minRate.toInteger();
+//                    htl.maxRate = hotel.maxRate.toInteger();
                     hotels.add(htl)
 
                     hotel.rooms?.each{room ->
@@ -132,19 +134,22 @@ class RequestParser {
                                     children: rate.children
                             ));*/
                             rm.roomCode=room.code;
-                            rm.roomPrice= rate.net;
+                            rm.roomPrice=rate.net.toDouble();
                             rm.roomHotelCode=hotel.code;
                             rm.boardCode=rate.boardCode;
                             //rm.occupied=[];
                             rm.adults= rate.adults;
                             rm.children= rate.children;
                             rm.allotment=rate.allotment;
-                            def ct = hotel.categoryName;
+                            String ct = hotel.categoryName;
                             if (ct == 'HOSTEL')
                                 rm.hotelStars=1;
-                            else
-                                rm.hotelStars = ct.split(' ')[0].toInteger;
+                            else{
+                                def st = ct.substring(0,1);
+                                rm.hotelStars = st.toInteger();
+                            }
                             roomtypes.add(rm);
+                            System.out.println('+++');
                         }
                     }
                 }

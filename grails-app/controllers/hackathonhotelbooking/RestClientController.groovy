@@ -9,7 +9,6 @@ class RestClientController {
     def index() {}
 
     def sendHotelsLook(String params){
-        System.out.println(params);
 
         def jsn = new JsonSlurper().parseText(params);
         BookingLookUp blu = new BookingLookUp();
@@ -53,7 +52,7 @@ class RestClientController {
                     bluItem.groupSettings.add(bgsItem);
                 }
                 //(BookingLookUp) blu.clone();
-                if (i != 0) bluItem.fulltimeCheckIn.plusDays(30 * i + 1);
+                if (i != 0) bluItem.fulltimeCheckIn = bluItem.fulltimeCheckIn.plusDays(30 * i + 1);
                 bluItem.fulltimeCheckOut = bluItem.fulltimeCheckIn.plusDays(30);
 
                 blus.add(bluItem);
@@ -70,12 +69,13 @@ class RestClientController {
         }
         def parsedResponse = RequestParser.parseResponse(responses);
 
-        List<Group> groups = SetAvailability.setAvailability(parsedResponse);
+        Group[] groups = SetAvailability.setAvailability(parsedResponse);
         /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
             results.add(HotelBedsHttpClient.sendRequest(req[j]));
         }*/
-        //System.out.println(results[0]);
+        System.out.println(groups[0].roomTypes.size());
 //        String response = HotelBedsHttpClient.sendRequest(req);
-        render view: '/bookingLookUp/index', model: [booking : blu, roomGroups : groups]
+
+        render template: '/layouts/resultList', model: [booking : blu, roomGroups : groups]
     }
 }

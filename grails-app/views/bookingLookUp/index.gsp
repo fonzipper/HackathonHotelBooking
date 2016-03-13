@@ -156,38 +156,9 @@
                 <button class="btn btn-success" onclick="roomsSearch(); return false;">Search</button>
             </div>
         </div>
-        <g:if test="${roomGroups}">
-            <div class="row">
-                <div class="col-ms-12">
-                    <table class="table-striped">
-                        <thead>
-                            <tr>
-                                %{--<th><span class="glyphicon glyphicon-stats"></span></th>--}%
-                                <th>Hotel</th>
-                                <th>Room Type</th>
-                                <th>Price</th>
-                                <th>Available now</th>
-                                <th>Mostly available</th>
-                                <th>Availability</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <g:each in="${roomGroups.roomTypes}" var="room">
-                                <tr>
-                                    %{--<td>${room.Rating}</td>--}%
-                                    <td>${room.Hotel}</td>
-                                    <td>${room.Type}</td>
-                                    <td>${room.Price}</td>
-                                    <td>${room.AvailableNow}</td>
-                                    <td>${room.AvailableAll}</td>
-                                    <td>${room.Availability}</td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </g:if>
+        <div class="row" id="searchResults">
+            <g:render template="/layouts/resultList" model="[roomGroups : groups]" />
+        </div>
     </div><!-- /.container -->
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbBdqhK286kQ6l1W5C28tqF2n8LcNqAAI&libraries=places&callback=initMap">
@@ -249,8 +220,8 @@
 //            $('#locationLng').text()
 
             params = {
-                longitude : $('#locationLat').text(),
-                lattitude : $('#locationLng').text(),
+                lattitude : $('#locationLat').text(),
+                longitude : $('#locationLng').text(),
                 checkin : $('#ftCheckIn').val(),
                 checkout : $('#ftCheckOut').val(),
                 radius : $('#lookupRadius').val(),
@@ -291,7 +262,10 @@
 
             $.ajax({
                 url : '/restClient/sendHotelsLook',
-                data : {params : JSON.stringify(params)}
+                data : {params : JSON.stringify(params)},
+                success : function(data){
+                    $('#searchResults').html(data);
+                }
             })
 
         }

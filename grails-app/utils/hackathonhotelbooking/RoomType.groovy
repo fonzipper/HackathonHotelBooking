@@ -1,14 +1,14 @@
 package hackathonhotelbooking
 public class RoomType {
     private String roomCode;
-    private int roomPrice;
-    private Hotel roomHotelCode;
+    private double roomPrice;
+    private String roomHotelCode;
     private String boardCode;
     private Integer adults;
     private Integer children;
     private int allotment;
     private int minFullAvailable;
-    private int availability;
+    private double availability;
     private double rating;
     public int hotelStars;
 
@@ -20,19 +20,19 @@ public class RoomType {
         this.roomCode = roomCode
     }
 
-    int getRoomPrice() {
+    double getRoomPrice() {
         return roomPrice
     }
 
-    void setRoomPrice(int roomPrice) {
+    void setRoomPrice(double roomPrice) {
         this.roomPrice = roomPrice
     }
 
-    Hotel getRoomHotelCode() {
+    String getRoomHotelCode() {
         return roomHotelCode
     }
 
-    void setRoomHotelCode(Hotel roomHotelCode) {
+    void setRoomHotelCode(String roomHotelCode) {
         this.roomHotelCode = roomHotelCode
     }
 
@@ -76,11 +76,11 @@ public class RoomType {
         this.minFullAvailable = minFullAvailable
     }
 
-    int getAvailability() {
+    double getAvailability() {
         return availability
     }
 
-    void setAvailability(int availability) {
+    void setAvailability(double availability) {
         this.availability = availability
     }
 
