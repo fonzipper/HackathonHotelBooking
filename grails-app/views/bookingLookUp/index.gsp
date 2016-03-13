@@ -156,9 +156,9 @@
                 </form>
             </div>
             <div class="col-md-12 text-center">
-                <button class="btn btn-success" onclick="roomsSearch(); return false;">Search</button>
-                <div class="progress progress-striped active hidden">
-                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                <button id="searchButton" class="btn btn-success" onclick="roomsSearch(); return false;">Search</button>
+                <div id="progressDiv" class="progress progress-striped active hidden">
+                    <div id="progressBar" class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
                         <span class="sr-only">45% Complete</span>
                     </div>
                 </div>
@@ -226,6 +226,10 @@
 
 //            $('#locationLat').text()
 //            $('#locationLng').text()
+            $('#searchButton').addClass('hidden');
+            $('#progressDiv').removeClass('hidden');
+            $('#progressBar').css('width', '10%').attr('aria-valuenow', 10);
+
 
             params = {
                 lattitude : $('#locationLat').text(),
@@ -267,15 +271,24 @@
                 ]
             };
 
-
             $.ajax({
                 url : '/restClient/sendHotelsLook',
                 data : {params : JSON.stringify(params)},
                 success : function(data){
                     $('#searchResults').html(data);
+                    $('#progressBar').css('width','100%').attr('aria-valuenow', 100);
+                    setTimeout(function(){
+                        $('#progressDiv').addClass('hidden');
+                        $('#searchButton').removeClass('hidden');
+                        $('#searchResult').scrollTop(100);
+                    }, 300);
                 }
-            })
-
+            });
+            for (var i=0; i<6; i++){
+                setTimeout(function(){
+                    $('#progressBar').css('width', i*17+'%').attr('aria-valuenow', i*17);
+                }, 700);
+            }
         }
 
         var map;
