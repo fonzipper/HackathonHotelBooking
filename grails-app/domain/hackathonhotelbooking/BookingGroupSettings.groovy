@@ -9,7 +9,7 @@ class BookingGroupSettings {
     private int innerId;
     private Integer maxPrice;
     private String paymentType;
-    private String c;
+    private String boardType;
 
     Integer getMaxPrice() {
         return maxPrice
