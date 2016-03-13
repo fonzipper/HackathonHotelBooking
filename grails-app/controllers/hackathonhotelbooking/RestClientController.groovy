@@ -69,11 +69,13 @@ class RestClientController {
             }
         }
         def parsedResponse = RequestParser.parseResponse(responses);
+
+        List<Group> groups = SetAvailability.setAvailability(parsedResponse);
         /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
             results.add(HotelBedsHttpClient.sendRequest(req[j]));
         }*/
         //System.out.println(results[0]);
 //        String response = HotelBedsHttpClient.sendRequest(req);
-        render view: '/bookingLookUp/index', model: [booking : blu]
+        render view: '/bookingLookUp/index', model: [booking : blu, roomGroups : groups]
     }
 }
