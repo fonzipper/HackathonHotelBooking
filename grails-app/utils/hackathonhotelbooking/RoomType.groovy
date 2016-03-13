@@ -1,16 +1,52 @@
 package hackathonhotelbooking
 public class RoomType {
+    private String roomName;
     private String roomCode;
     private double roomPrice;
     private String roomHotelCode;
+    private String hotelName;
     private String boardCode;
+    private String boardName;
     private Integer adults;
     private Integer children;
     private int allotment;
     private int minFullAvailable;
+    private int maxFullAvailable;
     private double availability;
     private double rating;
     public int hotelStars;
+
+    String getRoomName() {
+        return roomName
+    }
+
+    void setRoomName(String roomName) {
+        this.roomName = roomName
+    }
+
+    String getHotelName() {
+        return hotelName
+    }
+
+    void setHotelName(String hotelName) {
+        this.hotelName = hotelName
+    }
+
+    String getBoardName() {
+        return boardName
+    }
+
+    void setBoardName(String boardName) {
+        this.boardName = boardName
+    }
+
+    int getMaxFullAvailable() {
+        return maxFullAvailable
+    }
+
+    void setMaxFullAvailable(int maxFullAvailable) {
+        this.maxFullAvailable = maxFullAvailable
+    }
 
     String getRoomCode() {
         return roomCode

@@ -125,19 +125,13 @@ class RequestParser {
                     hotel.rooms?.each{room ->
                         room.rates?.each { rate ->
                             RoomType rm = new RoomType();
-                            /*rooms.add(new Room(roomCode:room.code,
-                                    roomPrice: rate.net,
-                                    roomHotelCode:result.hotels.hotels[k].code,
-                                    boardCode:rate.boardCode,
-                                    occupied:[],
-                                    adults: rate.adults,
-                                    children: rate.children
-                            ));*/
+                            rm.roomName = room.name;
                             rm.roomCode=room.code;
                             rm.roomPrice=rate.net.toDouble();
                             rm.roomHotelCode=hotel.code;
+                            rm.hotelName = hotel.name;
                             rm.boardCode=rate.boardCode;
-                            //rm.occupied=[];
+                            rm.boardName = rate.boardName;
                             rm.adults= rate.adults;
                             rm.children= rate.children;
                             rm.allotment=rate.allotment;
