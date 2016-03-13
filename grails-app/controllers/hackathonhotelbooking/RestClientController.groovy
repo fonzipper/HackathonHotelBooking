@@ -60,18 +60,15 @@ class RestClientController {
             }
         }
         def requests = RequestParser.prepareRequest(blus);
-        String request = requests[0][0];
-        System.out.println('1235'+request);
         String [][] responses = new String[blus.size()][blus[0].groupSettings.size()];
         for (int month = 0; month < blus.size(); month++) {
             for (int group = 0; group < blus[0].groupSettings.size(); group++) {
 
-                request = requests[month][group];
-                System.out.println('1235'+request);
+                def request = requests[month][group];
                 responses[month][group] = HotelBedsHttpClient.sendRequest(request);
             }
         }
-        RequestParser.parseResponse(responses);
+        def parsedResponse = RequestParser.parseResponse(responses);
         /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
             results.add(HotelBedsHttpClient.sendRequest(req[j]));
         }*/
