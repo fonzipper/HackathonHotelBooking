@@ -99,7 +99,7 @@ class RequestParser {
     }
 
 
-    public static SearchResults[][] parseResponse(String[][] res) {
+    public static SearchResults[][] parseResponse(String[][] res, List<BookingGroupSettings> bgs) {
         SearchResults [][] searchResults = new SearchResults [res.length][res[0].length];
         for (int month = 0; month < res.length; month++) {
             for (int group = 0; group < res[month].length; group++) {
@@ -147,6 +147,7 @@ class RequestParser {
                 SearchResults sr = new SearchResults()
                 sr.hotels = hotels;
                 sr.roomTypes = roomtypes;
+                sr.groups = bgs[group];
                 searchResults[month][group] = sr;
             }
         }

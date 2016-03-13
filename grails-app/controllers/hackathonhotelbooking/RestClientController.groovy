@@ -67,7 +67,7 @@ class RestClientController {
                 responses[month][group] = HotelBedsHttpClient.sendRequest(request);
             }
         }
-        def parsedResponse = RequestParser.parseResponse(responses);
+        def parsedResponse = RequestParser.parseResponse(responses, blus[0].getGroupSettings());
 
         Group[] groups = SetAvailability.setAvailability(parsedResponse);
         /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
