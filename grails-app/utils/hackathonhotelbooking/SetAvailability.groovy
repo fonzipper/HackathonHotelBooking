@@ -6,8 +6,8 @@ class SetAvailability {
     public static Group [] setAvailability(SearchResults[][] searchResults){
         Group [] groups = new Group[searchResults[0].length];
         for(int group = 0; group < searchResults[0].length; group++){
-            groups[group].bookingGroupSettings =  searchResults[0][group].groups;
             groups[group] = new Group();
+            groups[group].bookingGroupSettings =  searchResults[0][group].groups;
             groups[group].roomTypes = new ArrayList<>();
             for (RoomType rt : searchResults[0][group].roomTypes){
                 List <Integer> allotments = [searchResults.length]

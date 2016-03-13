@@ -5,13 +5,13 @@ package hackathonhotelbooking
  */
 class Group {
     private List<RoomType> roomTypes;
-    private List<BookingGroupSettings> bookingGroupSettings;
+    private BookingGroupSettings bookingGroupSettings;
 
-    List<BookingGroupSettings> getBookingGroupSettings() {
+    BookingGroupSettings getBookingGroupSettings() {
         return bookingGroupSettings
     }
 
-    void setBookingGroupSettings(List<BookingGroupSettings> bookingGroupSettings) {
+    void setBookingGroupSettings(BookingGroupSettings bookingGroupSettings) {
         this.bookingGroupSettings = bookingGroupSettings
     }
 
