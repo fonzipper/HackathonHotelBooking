@@ -25,6 +25,9 @@
             display: none;
             /*visibility: hidden;*/
         }
+        .nopadding {
+            padding: 0px;
+        }
     </style>
 </head>
 
@@ -83,7 +86,7 @@
                 </form>
             </div>
             <div class="col-md-8">
-                <div id="map"></div>
+                <div id="map" style="border-radius: 4px;"></div>
             </div>
         </div>
         <br/>
@@ -154,6 +157,11 @@
             </div>
             <div class="col-md-12 text-center">
                 <button class="btn btn-success" onclick="roomsSearch(); return false;">Search</button>
+                <div class="progress progress-striped active hidden">
+                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                        <span class="sr-only">45% Complete</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row" id="searchResults">
