@@ -22,12 +22,16 @@ class SetAvailability {
                     }
                 }
                 RoomType rt_res = new RoomType();
+                rt_res.roomName = rt.roomName;
+                rt_res.boardName = rt.boardName;
+                rt_res.hotelName = rt.hotelName;
                 rt_res.roomPrice = price;
                 rt_res.roomCode = rt.roomCode;
                 rt_res.roomHotelCode = rt.roomHotelCode;
                 rt_res.boardCode = rt.boardCode;
                 rt_res.adults = rt.adults;
                 rt_res.children = rt.children;
+                rt_res.maxFullAvailable = allotments.max();
                 rt_res.minFullAvailable = allotments.min();
                 def almax = 0;
                 def alsum = 0;
