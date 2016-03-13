@@ -43,8 +43,6 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -155,19 +153,37 @@
                 </form>
             </div>
             <div class="col-md-12 text-center">
-                <button class="btn btn-default" onclick="roomsSearch(); return false;">Search</button>
+                <button class="btn btn-success" onclick="roomsSearch(); return false;">Search</button>
             </div>
         </div>
-        <g:if test="${rooms}">
+        <g:if test="${roomGroups}">
             <div class="row">
                 <div class="col-ms-12">
                     <table class="table-striped">
                         <thead>
                             <tr>
+                                <th><span class="glyphicon glyphicon-stats"></span></th>
                                 <th>Hotel</th>
+                                <th>Room Type</th>
                                 <th>Price</th>
+                                <th>Available now</th>
+                                <th>Mostly available</th>
+                                <th>Availability</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <g:each in="${roomGroups.rooms}" var="room">
+                                <tr>
+                                    <td>${room.Rating}</td>
+                                    <td>${room.Hotel}</td>
+                                    <td>${room.Type}</td>
+                                    <td>${room.Price}</td>
+                                    <td>${room.AvailableNow}</td>
+                                    <td>${room.AvailableAll}</td>
+                                    <td>${room.Availability}</td>
+                                </tr>
+                            </g:each>
+                        </tbody>
                     </table>
                 </div>
             </div>
