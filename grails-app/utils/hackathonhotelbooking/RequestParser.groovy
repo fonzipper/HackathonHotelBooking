@@ -4,12 +4,12 @@ import groovy.json.JsonSlurper
  * Created by Punker on 12.03.2016.
  */
 class RequestParser {
-    public static String[] prepareRequest(List<BookingLookUp> searchSettings) {
-        String[][] req;
-        for (int month = 0; month < searchSettings.length; month++) {
+    public static String[][] prepareRequest(List<BookingLookUp> searchSettings) {
+        String[][] req = new String [searchSettings.size()][searchSettings[0].groupSettings.size()];
+        for (int month = 0; month < searchSettings.size(); month++) {
 
             for (int group = 0; group < searchSettings[month].groupSettings.size(); group++) {
-
+//                req[month] = [searchSettings[month].groupSettings.size()];
                 String per = """{
             "stay": {
                 "checkIn": "${searchSettings[month].fulltimeCheckIn.toString('YYYY-MM-dd')}",
@@ -83,14 +83,9 @@ class RequestParser {
                 "maxRatesPerRoom": 3,
                 "minCategory": ${searchSettings[month].groupSettings[group].stars},
                 "maxCategory": 5,
-                "paymentType": "${searchSettings[month].groupSettings[group].paymentType}",
-                "maxRate": "${searchSettings[month].groupSettings[group].maxPrice}"
-            },""" + searchSettings[month].groupSettings[group].boardType != null ? """ "boards": {
-    "included": true,
-    "board": [
-      "${searchSettings[month].groupSettings[group].boardType}"
-    ]
-  },""" : "" + """
+                "paymentType": "AT_WEB",
+                "maxRate": "500"
+            },
             "geolocation": {
                 "radius": ${searchSettings[month].radius},
                 "latitude": ${searchSettings[month].xLocation},
@@ -99,15 +94,15 @@ class RequestParser {
             }
         }""";
                 req[month][group] = per;
-                //System.out.println(req[0]);
+                System.out.println('!!request!!'+req[month][group]);
             }
         }
         return req;
     }
 
 
-    public static void parseResponse(String[][] res) {
-        SearchResults [][] searchResults;
+    public static SearchResults[][] parseResponse(String[][] res) {
+        SearchResults [][] searchResults = new SearchResults [res.length][res[0].length];
         for (int month = 0; month < res.length; month++) {
             for (int group = 0; group < res[month].length; group++) {
                 List<Room> rooms = new ArrayList<>();
@@ -153,5 +148,6 @@ class RequestParser {
                 searchResults[month][group] = sr;
             }
         }
+        return searchResults;
     }
 }
