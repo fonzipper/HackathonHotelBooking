@@ -14,6 +14,15 @@ public class RoomType {
     private int maxFullAvailable;
     private double availability;
     private double rating;
+    private List<Integer> occupied;
+
+    List<Integer> getOccupied() {
+        return occupied
+    }
+
+    void setOccupied(List<Integer> occupied) {
+        this.occupied = occupied
+    }
     public int hotelStars;
 
     String getRoomName() {

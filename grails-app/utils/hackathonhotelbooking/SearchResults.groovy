@@ -6,6 +6,15 @@ package hackathonhotelbooking
 public class SearchResults {
     private List<RoomType> roomTypes;
     private List<Hotel> hotels;
+    private List<BookingGroupSettings> groups;
+
+    List<BookingGroupSettings> getGroups() {
+        return groups
+    }
+
+    void setGroups(List<BookingGroupSettings> groups) {
+        this.groups = groups
+    }
 
     List<RoomType> getRoomTypes() {
         return roomTypes
