@@ -4,8 +4,6 @@ import groovy.json.JsonSlurper
 import org.joda.time.DateTime
 import org.joda.time.Days
 
-import java.text.SimpleDateFormat
-
 class RestClientController {
 
     def index() {}
@@ -41,25 +39,36 @@ class RestClientController {
 
         List<BookingLookUp> blus = new ArrayList<>();
         BookingLookUp bluItem;
+        BookingGroupSettings bgsItem;
 
         int days = Days.daysBetween(blu.fulltimeCheckIn, blu.fulltimeCheckOut).getDays();
         if (days > 30) {
             int months = days / 30;
             if ((days % 30) > 0) months++;
             for (int i = 0; i < months; i++) {
-                bluItem = (BookingLookUp) blu.clone();
-                if (i != 0)
-                    bluItem.fulltimeCheckIn.plusDays(30 * i + 1);
-                bluItem.fulltimeCheckOut = bluItem.fulltimeCheckIn.plusDays(30 * (i+1));
+                bluItem = new BookingLookUp([fulltimeCheckIn:blu.fulltimeCheckIn, fulltimeCheckOut:blu.fulltimeCheckOut, xLocation:blu.xLocation, yLocation:blu.yLocation, radius:blu.radius]);
+                bluItem.groupSettings = new ArrayList<>();
+                for (BookingGroupSettings bg : blu.groupSettings){
+                    bgsItem = new BookingGroupSettings([groupSize : bg.groupSize, accommodationType : bg.accommodationType, accommodationSize : bg.accommodationSize, stars : bg.stars]);
+                    bluItem.groupSettings.add(bgsItem);
+                }
+                //(BookingLookUp) blu.clone();
+                if (i != 0) bluItem.fulltimeCheckIn.plusDays(30 * i + 1);
+                bluItem.fulltimeCheckOut = bluItem.fulltimeCheckIn.plusDays(30);
 
                 blus.add(bluItem);
             }
         }
-        String [][] requests = RequestParser.prepareRequest(blus);
-        String [][] responses = [];
-        for (int month = 0; month < requests.length; month++) {
-            for (int group = 0; group < requests[month].length; group++) {
-                responses[month][group] = HotelBedsHttpClient.sendRequest(requests[month][group])
+        def requests = RequestParser.prepareRequest(blus);
+        String request = requests[0][0];
+        System.out.println('1235'+request);
+        String [][] responses = new String[blus.size()][blus[0].groupSettings.size()];
+        for (int month = 0; month < blus.size(); month++) {
+            for (int group = 0; group < blus[0].groupSettings.size(); group++) {
+
+                request = requests[month][group];
+                System.out.println('1235'+request);
+                responses[month][group] = HotelBedsHttpClient.sendRequest(request);
             }
         }
         RequestParser.parseResponse(responses);
