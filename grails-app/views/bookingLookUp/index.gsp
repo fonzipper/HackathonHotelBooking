@@ -162,7 +162,7 @@
                     <table class="table-striped">
                         <thead>
                             <tr>
-                                <th><span class="glyphicon glyphicon-stats"></span></th>
+                                %{--<th><span class="glyphicon glyphicon-stats"></span></th>--}%
                                 <th>Hotel</th>
                                 <th>Room Type</th>
                                 <th>Price</th>
@@ -172,9 +172,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <g:each in="${roomGroups.rooms}" var="room">
+                            <g:each in="${roomGroups.roomTypes}" var="room">
                                 <tr>
-                                    <td>${room.Rating}</td>
+                                    %{--<td>${room.Rating}</td>--}%
                                     <td>${room.Hotel}</td>
                                     <td>${room.Type}</td>
                                     <td>${room.Price}</td>
