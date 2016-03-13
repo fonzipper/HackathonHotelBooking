@@ -28,8 +28,10 @@ class SetAvailability {
                 rt_res.children = rt.children;
                 rt_res.minFullAvailable = allotments.min();
                 rt_res.availability = (allotments.sum()/allotments.size())/allotments.max();
+                rt_res.rating = rt_res.allotment * rt_res.availability * rt_res.hotelStars / rt_res.roomPrice;
                 groups[group].roomTypes.add(rt_res)
             }
+            groups[group].roomTypes = groups[group].roomTypes.sort{it.rating};
         }
         return groups;
     }
