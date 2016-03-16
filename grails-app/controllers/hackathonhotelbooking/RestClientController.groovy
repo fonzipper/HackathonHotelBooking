@@ -77,12 +77,24 @@ class RestClientController {
                 sortedGroups.putAt(i+gOptions.length*j,gOptions[i].groups4Option[j])
             }
         }
-        /*for(int j = 0; j<searchSettings.groupSettings.size(); j++) {
-            results.add(HotelBedsHttpClient.sendRequest(req[j]));
-        }*/
-//        System.out.println(groups[0].roomTypes.size());
-//        String response = HotelBedsHttpClient.sendRequest(req);
 
-        render template: '/layouts/resultList', model: [booking : blu, roomGroups : sortedGroups]
+        List<GroupOptions> go = new ArrayList<>(groups.size());
+        int k = 0;
+        int n = 0;
+        while (k < sortedGroups.size()){
+            go[n] = new GroupOptions();
+            go[n].groups4Option = new ArrayList<>();
+//            Group grp = sortedGroups.get(k);
+            go[n].groups4Option.add(sortedGroups.get(k));
+            k++;
+            go[n].groups4Option.add(sortedGroups.get(k));
+            k++;
+            go[n].groups4Option.add(sortedGroups.get(k));
+            k++;
+            n++;
+        }
+
+
+        render template: '/layouts/resultList', model: [booking : blu, roomGroups : go]
     }
 }
