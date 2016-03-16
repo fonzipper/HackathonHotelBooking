@@ -43,9 +43,6 @@ dependencyManagement {
 dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.1'
     compile 'joda-time:joda-time:2.9.1'
-    runtime "com.github.jsimone:webapp-runner:8.0.30.2"
-
-
 
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
@@ -74,19 +71,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
-task copyToLib(type: Copy) {
-    into "$buildDir/output/libs"
-    from configurations.runtime
-}
-
-task stage(dependsOn: ["clean", "copyToLib", "war"])
-tasks.stage.doLast() {
-    delete fileTree(dir: "$buildDir/output/libs", exclude: "*webapp-runner*")
-    delete fileTree(dir: "build/distributions")
-    delete fileTree(dir: "build/assetCompile")
-    delete fileTree(dir: "build/distributions")
-    delete fileTree(dir: "build/libs", exclude: "*.war")
-}
+task stage(dependsOn: ["clean", "war"])
 
 assets {
     minifyJs = true
