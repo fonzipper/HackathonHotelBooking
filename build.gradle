@@ -72,6 +72,9 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
+task stage {
+
+}
 
 assets {
     minifyJs = true
