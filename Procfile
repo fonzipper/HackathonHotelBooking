@@ -1,1 +1,1 @@
-web: cd build/libs ; java $JAVA_OPTS -Dgrails.env=prod -jar ../../server/webapp-runner.jar --port $PORT Hackathon\ Hotel\ Booking-0.1.war
+web: java $JAVA_OPTS -Dgrails.env=prod -jar build/output/libs/webapp-runner-8.0.30.2.jar --port $PORT build/libs/Hackathon\ Hotel\ Booking-0.1.war
