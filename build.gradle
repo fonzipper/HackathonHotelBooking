@@ -80,6 +80,13 @@ task copyToLib(type: Copy) {
 }
 
 task stage(dependsOn: ["clean", "copyToLib", "war"])
+tasks.stage.doLast() {
+    delete fileTree(dir: "$buildDir/output/libs", exclude: "*webapp-runner*")
+    delete fileTree(dir: "build/distributions")
+    delete fileTree(dir: "build/assetCompile")
+    delete fileTree(dir: "build/distributions")
+    delete fileTree(dir: "build/libs", exclude: "*.war")
+}
 
 assets {
     minifyJs = true
