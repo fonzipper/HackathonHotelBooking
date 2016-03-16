@@ -22,6 +22,7 @@ class PrepareVariants {
                 rt.availability = 100;
                 rt.occupied.add(0)
                 gro1.groups4Option.putAt(i, new Group());
+                gro1.groups4Option[i].bookingGroupSettings = groups[i].bookingGroupSettings;
                 gro1.groups4Option[i].roomTypes = new ArrayList<>();
                 gro1.groups4Option[i].roomTypes.add(rt);
                 if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
@@ -45,9 +46,13 @@ class PrepareVariants {
                         groups_number = groups_number + 1;
                     }
                 }
-                rt.availability = 100 - (100/(rt.maxFullAvailable - rt.minFullAvailable));
+                if (rt.minFullAvailable == rt.minFullAvailable)
+                    rt.availability = 100;
+                else
+                    rt.availability = 100 - ((100/(rt.maxFullAvailable - rt.minFullAvailable)));
                 rt.occupied.add(1);
                 gro2.groups4Option.putAt(i, new Group());
+                gro2.groups4Option[i].bookingGroupSettings = groups[i].bookingGroupSettings;
                 gro2.groups4Option[i].roomTypes = new ArrayList<>();
                 gro2.groups4Option[i].roomTypes.add(rt);
                 if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
@@ -62,24 +67,30 @@ class PrepareVariants {
         for (int i = 0; i < groups.length; i++) {
             Integer groups_number = 0
 
-            List<RoomType> rtByAvailability = groups[i].roomTypes.sort{it.availability};
+            List<RoomType> rtByAvailability = groups[i].roomTypes.sort{it.rating};
+            gro3.groups4Option.putAt(i, new Group());
+            gro3.groups4Option[i].bookingGroupSettings = groups[i].bookingGroupSettings;
+            gro3.groups4Option[i].roomTypes = new ArrayList<>();
 
             for (RoomType rt : rtByAvailability) {
-                for(int g = 0; g < rt.minFullAvailable+2;g++) {
-                    if (groups[i].bookingGroupSettings.accommodationType == "Single") {
-                        groups_number = groups_number + Integer.valueOf(rt.adults);
-                    } else {
-                        groups_number = groups_number + 1;
-                    }
-                }
-                rt.availability = 100 - (2*(100/(rt.maxFullAvailable - rt.minFullAvailable)));
+//                for(int g = 0; g < rt.minFullAvailable+2;g++) {
+//                    if (groups[i].bookingGroupSettings.accommodationType == "Single") {
+//                        groups_number = groups_number + Integer.valueOf(rt.adults);
+//                    } else {
+//                        groups_number = groups_number + 1;
+//                    }
+//                    if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
+//                        break;
+//                    }
+//                }
+                if (rt.minFullAvailable == rt.minFullAvailable)
+                    rt.availability = 100;
+                else
+                    rt.availability = 100 - (2*(100/(rt.maxFullAvailable - rt.minFullAvailable)));
                 rt.occupied.add(2);
-                gro3.groups4Option.putAt(i, new Group());
-                gro3.groups4Option[i].roomTypes = new ArrayList<>();
+
                 gro3.groups4Option[i].roomTypes.add(rt);
-                if (groups_number >= groups[i].bookingGroupSettings.groupSize) {
-                    break;
-                }
+
             }
         }
 

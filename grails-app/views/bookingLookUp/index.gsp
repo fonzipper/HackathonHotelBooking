@@ -28,6 +28,9 @@
         .nopadding {
             padding: 0px;
         }
+        table {
+            font-size: 13px;
+        }
     </style>
 </head>
 
@@ -45,7 +48,7 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    %{--<li class="active"><a href="#">Home</a></li>--}%
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -96,7 +99,7 @@
 
                 <form class="form-horizontal" role="form" title="Search criteria form" id="fullTimeCriteriaForm">
 
-                    <legend>Full-time accommodation</legend>
+                    <legend>Full-time</legend>
                     <div class="form-group">
                         <label class="col-sm-5 control-label" for="ftCheckIn">Check in</label>
                         <div class="col-sm-7">
@@ -111,24 +114,24 @@
                     </div>
                     <g:each in="${booking.groupSettings}" var="setting">
                         <div class="hidden" id="groupsettings${setting.innerId}">
-                            <legend>Group ${setting.innerId} settings</legend>
+                            <legend>Group ${setting.innerId}</legend>
                             <div class="form-group">
-                                <label for="groupSize${setting.innerId}" class="col-md-5 control-label">Group size</label>
+                                <label for="groupSize${setting.innerId}" class="col-md-5 control-label">Members</label>
                                 <div class="col-md-7">
                                     <input class="form-control" id="groupSize${setting.innerId}" type="number" value="${setting.groupSize}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="accommodationType${setting.innerId}" class="col-md-5 control-label">AccommodationType</label>
+                                <label for="accommodationType${setting.innerId}" class="col-md-5 control-label">Accommodation</label>
                                 <div class="col-md-7">
-                                    <select class="form-control" id="accommodationType${setting.innerId}" value="${setting.accommodationType}">
+                                    <select class="form-control" id="accommodationType${setting.innerId}" value="${setting.accommodationType}" onchange="changeLabel(${setting.innerId})">
                                         <option>Single</option>
                                         <option>Family</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="accommodationSize${setting.innerId}" class="col-md-5 control-label">Accommodation/Children</label>
+                                <label id="groupAccSizeLabel${setting.innerId}" for="accommodationSize${setting.innerId}" class="col-md-5 control-label">Guests per room</label>
                                 <div class="col-md-7">
                                     <input class="form-control" id="accommodationSize${setting.innerId}" type="number" value="${setting.accommodationSize}">
                                 </div>
@@ -145,15 +148,15 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <form class="form-horizontal" role="form" title="Search criteria form" id="partTimeCriteriaForm">
-                    <legend>Part-time accommodation</legend>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label" for="executivesCount">Members</label>
-                        <div class="col-sm-7">
-                            <input id="executivesCount" type="number" class="form-control" value="${booking.vipSuitNumber}">
-                        </div>
-                    </div>
-                </form>
+                %{--<form class="form-horizontal" role="form" title="Search criteria form" id="partTimeCriteriaForm">--}%
+                    %{--<legend>Part-time</legend>--}%
+                    %{--<div class="form-group">--}%
+                        %{--<label class="col-sm-5 control-label" for="executivesCount">Members</label>--}%
+                        %{--<div class="col-sm-7">--}%
+                            %{--<input id="executivesCount" type="number" class="form-control" value="${booking.vipSuitNumber}">--}%
+                        %{--</div>--}%
+                    %{--</div>--}%
+                %{--</form>--}%
             </div>
             <div class="col-md-12 text-center">
                 <button id="searchButton" class="btn btn-success" onclick="roomsSearch(); return false;">Search</button>
@@ -176,6 +179,15 @@
     <link rel="javascript" href="${resource(dir: 'js', file: 'bootstrap.min.js')}" type="text/javascript">
     <script type="text/javascript">
         var visibleGroups = 0;
+
+        function changeLabel(id){
+            var type = $("#accommodationType"+id).val();
+            if (type == 'Single') {
+                $("#groupAccSizeLabel"+id).html('Guests per room');
+            }else{
+                $('#groupAccSizeLabel'+id).html('Children');
+            }
+        }
 
         function doSearch() {
             debugger;
