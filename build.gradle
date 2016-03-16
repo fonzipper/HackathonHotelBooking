@@ -72,9 +72,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
-task stage {
-
-}
+task stage(dependsOn: ["clean", "war"])
 
 assets {
     minifyJs = true
